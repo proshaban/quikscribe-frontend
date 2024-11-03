@@ -18,29 +18,37 @@ export default function TranscribePage() {
     setError,
   } = useTranscriptionStore();
 
+  const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
+
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
     if (!file) return;
 
     setFile(file);
-    setStatus('processing');
+    setUploadedFileName(file.name);
+    setStatus('idle');
     setError(null);
 
-    try {
-      const transcriptionService = TranscriptionService.getInstance();
-      const audioData = await transcriptionService.convertToWav(file);
-      const text = await transcriptionService.transcribe(audioData, setProgress);
-
-      setTranscription(text);
-      setStatus('completed');
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to transcribe file');
-      setStatus('error');
-    }
   }, []);
 
+  const handleTranscribeNow = async () => {
+    if (file) {
+      setStatus('processing');
+      const transcriptionService = TranscriptionService.getInstance();
+      try {
+        const audioData = await transcriptionService.convertToWav(file);
+        const text = await transcriptionService.transcribe(audioData, setProgress);
+        setTranscription(text);
+        setStatus('completed');
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to transcribe file');
+        setStatus('error');
+      }
+    }
+  };
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop,
+    onDrop, // Ensure this function is correctly defined
     accept: {
       'audio/*': ['.mp3', '.wav', '.m4a'],
       'video/*': ['.mp4', '.mov'],
@@ -58,9 +66,14 @@ export default function TranscribePage() {
             Upload your audio or video file to get started
           </p>
         </div>
+        {uploadedFileName && ( // Render the uploaded file name
+          <p className="mt-8 text-gray-800 font-semibold text-center">
+            {uploadedFileName}
+          </p>
+        )}
 
         <div className="mt-12">
-          {status === 'idle' && (
+          {!uploadedFileName && (
             <div
               {...getRootProps()}
               className={`border-2 border-dashed rounded-lg p-12 text-center cursor-pointer
@@ -74,6 +87,16 @@ export default function TranscribePage() {
               <p className="mt-1 text-sm text-gray-500">
                 Supports MP3, WAV, MP4, and more (up to 2GB)
               </p>
+            </div>
+          )}
+          {status === 'idle' && (
+            <div className="text-center mt-20 flex justify-center">
+              <button
+                onClick={handleTranscribeNow}
+                className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
+              >
+                Transcribe Now
+              </button>
             </div>
           )}
 
