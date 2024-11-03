@@ -10,9 +10,9 @@ export default function Navbar() {
       <div className="mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           <ScrollLink to="hero" className="flex items-center cursor-pointer">
-            {/* <LinkIcon className="h-8 w-8 text-purple-600" />
-            <span className="ml-2 text-xl font-bold text-gray-900">Quikscribe.in</span> */}
-            <img src="src/assets/logo.png" alt="logo" className='w-80' />
+            <img src="src/assets/logo.svg" alt="logo" className='w-16' />
+            {/* <LinkIcon className="h-8 w-8 text-purple-600" /> */}
+            <span className="ml-2 text-2xl font-bold text-gray-900">Quikscribe.in</span>
           </ScrollLink>
 
           <div className="hidden md:flex items-center space-x-8">
