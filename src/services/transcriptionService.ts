@@ -59,8 +59,8 @@ export class TranscriptionService {
 
     // Return simulated transcription
     return `[Speaker 1] This is a simulated transcription of the audio file.
-[Speaker 2] The actual implementation would use a real AI service.
-[Speaker 1] Such as Whisper API or a similar service.
-[Speaker 2] With proper speaker diarization and timestamps.`;
+            [Speaker 2] The actual implementation would use a real AI service.
+            [Speaker 1] Such as Whisper API or a similar service.
+            [Speaker 2] With proper speaker diarization and timestamps.`;
   }
 }

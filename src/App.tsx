@@ -41,6 +41,7 @@ function App() {
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/transcribe" element={<TranscribePage />} />
+          <Route path="/dashboard" element={<TranscribePage />} />
         </Routes>
       </div>
     </Router>

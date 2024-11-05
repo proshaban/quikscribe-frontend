@@ -3,6 +3,7 @@ import { useDropzone } from 'react-dropzone';
 import { Upload, FileAudio, AlertCircle, Loader2 } from 'lucide-react';
 import { useTranscriptionStore } from '../store/transcriptionStore';
 import { TranscriptionService } from '../services/transcriptionService';
+import BuyProButton from '../components/BuyPro'
 
 export default function TranscribePage() {
   const {
@@ -72,6 +73,7 @@ export default function TranscribePage() {
           </p>
         )}
 
+
         <div className="mt-12">
           {!uploadedFileName && (
             <div
@@ -113,6 +115,12 @@ export default function TranscribePage() {
             </div>
           )}
 
+          {status === 'completed' && (
+            <div className='flex justify-end space-x-4 mb-4'>
+              <BuyProButton />
+            </div>
+          )
+          }
           {status === 'completed' && transcription && (
             <div className="bg-white rounded-lg shadow p-6">
               <h2 className="text-xl font-semibold mb-4">Transcription Result</h2>
