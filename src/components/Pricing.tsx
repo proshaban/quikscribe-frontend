@@ -1,4 +1,5 @@
 import { Check } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const tiers = [
   {
@@ -13,6 +14,7 @@ const tiers = [
     ],
     cta: 'Start Free Trial',
     highlighted: false,
+    link:'/signup'
   },
   {
     name: 'Pro',
@@ -28,6 +30,7 @@ const tiers = [
     ],
     cta: 'Get Started',
     highlighted: true,
+    link:'/signup'
   },
   {
     name: 'Enterprise',
@@ -42,6 +45,7 @@ const tiers = [
     ],
     cta: 'Contact Sales',
     highlighted: false,
+    link:'tel:+919082410984'
   },
 ];
 
@@ -88,14 +92,16 @@ export default function Pricing() {
                 ))}
               </ul>
 
-              <button
-                className={`mt-8 w-full rounded-lg px-4 py-2.5 text-sm font-semibold ${tier.highlighted
-                  ? 'bg-purple-600 text-white hover:bg-purple-700'
-                  : 'border-2 border-purple-600 text-purple-600 hover:bg-purple-50'
-                  }`}
-              >
-                {tier.cta}
-              </button>
+              <Link to={tier.link}>
+                <button
+                  className={`mt-8 w-full rounded-lg px-4 py-2.5 text-sm font-semibold ${tier.highlighted
+                    ? 'bg-purple-600 text-white hover:bg-purple-700'
+                    : 'border-2 border-purple-600 text-purple-600 hover:bg-purple-50'
+                    }`}
+                >
+                  {tier.cta}
+                </button>
+              </Link>
             </div>
           ))}
         </div>

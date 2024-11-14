@@ -33,12 +33,12 @@ export default function Hero() {
             </p>
 
             <div className="mt-10 flex items-center justify-center gap-x-6">
-              <button
+              {/* <button
                 onClick={() => navigate('/signup')}
                 className="rounded-lg bg-purple-600 px-8 py-3 text-lg font-semibold text-white shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
               >
                 Start Transcribing
-              </button>
+              </button> */}
               <button
                 onClick={() => setIsModalOpen(true)}
                 className="rounded-lg border-2 border-purple-600 px-8 py-3 text-lg font-semibold text-purple-600 hover:bg-purple-50 transition-colors"

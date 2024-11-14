@@ -1,17 +1,40 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Link as LinkIcon } from 'lucide-react';
+import { z } from 'zod';
+
+const signUpSchema = z.object({
+  name: z.string().min(1, "Name is required").max(50, "Name must be 50 characters or less"),
+  email: z.string().email("Invalid email address").nonempty("Email is required"),
+  password: z.string().min(6, "Password must be at least 6 characters long"),
+  terms: z.boolean().refine(val => val, "You must accept the Terms of Service and Privacy Policy")
+});
+
 
 export default function SignUp() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [term, setTerm] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle sign up logic here
-    navigate('/dashboard');
+    const formData = {
+      name,
+      email,
+      password,
+      terms: e.currentTarget.terms.checked,
+    };
+  
+    const validationResult = signUpSchema.safeParse(formData);
+    if (!validationResult.success) {
+      console.error(validationResult.error.errors[0].message);
+      // Handle validation errors here
+    } else {
+      // Handle successful form submission
+      navigate('/dashboard');
+    }
   };
 
   return (
@@ -93,6 +116,8 @@ export default function SignUp() {
                 id="terms"
                 name="terms"
                 type="checkbox"
+                checked={term}
+                onChange={()=>setTerm(!term)}
                 required
                 className="h-4 w-4 rounded border-gray-300 text-purple-600 focus:ring-purple-500"
               />
